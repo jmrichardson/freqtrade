@@ -39,9 +39,20 @@ def _flat_vars_to_nested_dict(env_dict: Dict[str, Any], prefix: str) -> Dict[str
         if env_var.startswith(prefix):
             logger.info(f"Loading variable '{env_var}'")
             key = env_var.replace(prefix, "")
-            for k in reversed(key.split("__")):
+            key_parts = key.split("__")
+
+            # Manually change specific keys
+            for i, part in enumerate(key_parts):
+                if part.lower() == "httpsproxy":
+                    key_parts[i] = "httpsProxy"
+                elif part.lower() == "wsproxy":
+                    key_parts[i] = "wsProxy"
+                else:
+                    key_parts[i] = part.lower()
+
+            for k in reversed(key_parts):
                 val = {
-                    k.lower(): (
+                    k: (
                         _get_var_typed(val)
                         if not isinstance(val, dict) and k not in no_convert
                         else val
