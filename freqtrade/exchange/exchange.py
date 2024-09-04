@@ -829,10 +829,10 @@ class Exchange:
 
     def validate_freqai(self, config: Config) -> None:
         freqai_enabled = config.get("freqai", {}).get("enabled", False)
-        if freqai_enabled and not self._ft_has["ohlcv_has_history"]:
-            raise ConfigurationError(
-                f"Historic OHLCV data not available for {self.name}. Can't use freqAI."
-            )
+        # if freqai_enabled and not self._ft_has["ohlcv_has_history"]:
+        #     raise ConfigurationError(
+        #         f"Historic OHLCV data not available for {self.name}. Can't use freqAI."
+        #     )
 
     def validate_required_startup_candles(self, startup_candles: int, timeframe: str) -> int:
         """
